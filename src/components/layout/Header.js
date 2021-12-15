@@ -10,7 +10,6 @@ import { TaskDate } from "../TaskDate";
 import FireBase from "../../firebase";
 const Header = () => {
   const select = useSelector((state) => state.tasks);
-  console.log(select);
   const dispatch = useDispatch();
 
   const handleShowToggle = () => {
@@ -84,7 +83,7 @@ const Header = () => {
             </Modal.Body>
           </Modal>
         ) : (
-          console.log("Model of Quick Add")
+          console.log("Modal of Quick Add")
         )}
       </div>
     </>

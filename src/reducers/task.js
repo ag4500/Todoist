@@ -4,6 +4,7 @@ import {
   SHOW_TASK_DATE,
   SET_TASK_DATE,
   SET_SELECTED_PROJECT,
+  SET_PROJECT,
 } from "../actions";
 
 const initialState = {
@@ -12,6 +13,8 @@ const initialState = {
   showtaskdate: false,
   settaskdate: "",
   setselectedproject: "Inbox",
+  setProject: false,
+  projectId: "",
 };
 
 export default function tasks(state = initialState, action) {
@@ -40,6 +43,11 @@ export default function tasks(state = initialState, action) {
       return {
         ...state,
         setselectedproject: action.payload,
+      };
+    case SET_PROJECT:
+      return {
+        ...state,
+        setProject: action.payload,
       };
 
     default:
