@@ -1,0 +1,37 @@
+import ListGroup from "react-bootstrap/ListGroup";
+import { toggleTask } from "../actions";
+import { useSelector, useDispatch } from "react-redux";
+import CheckBox from "./Checkbox";
+
+const AddProjectTask = () => {
+  const dispatch = useDispatch();
+  const project = useSelector((state) => state.projects);
+
+  const getprojectarray = useSelector(
+    (state) => state.firebaseData.gettaskarrayproject
+  );
+
+  const addTaskToggle = useSelector((state) => state.tasks);
+  const handleAddTask = () => {
+    dispatch(toggleTask(!addTaskToggle.toggle));
+  };
+
+  return (
+    <>
+      <div className="col-md-6">
+        <h2 className="my-3 text-center fst-italic">
+          {project.setprojectname}
+        </h2>
+        {getprojectarray.map((i) =>
+          i.projectId == project.projectId ? <><li>{i.task}</li> <CheckBox/></>: undefined
+        )}
+        <ListGroup className="my-3">
+          <ListGroup.Item onClick={() => handleAddTask()}>
+            + Add Task
+          </ListGroup.Item>
+        </ListGroup>
+      </div>
+    </>
+  );
+};
+export default AddProjectTask;

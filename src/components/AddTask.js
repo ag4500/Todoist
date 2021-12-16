@@ -1,15 +1,16 @@
-import { toggleTask, getFireBaseData } from "../actions";
+import { toggleTask, getFireBaseData, getFirebaseTaskArray } from "../actions";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import FireBase from "../firebase";
 import moment from "moment";
 import ListGroup from "react-bootstrap/ListGroup";
+import CheckBox from "./Checkbox";
 const AddTask = () => {
   const dispatch = useDispatch();
   const getdata = useSelector((state) => state.firebaseData.getdata);
   const select = useSelector((state) => state.tasks.setselectedproject);
   const addTaskToggle = useSelector((state) => state.tasks);
-
+  console.log(getdata)
   const handleAddTask = () => {
     dispatch(toggleTask(!addTaskToggle.toggle));
   };
@@ -21,6 +22,7 @@ const AddTask = () => {
           ...task.data(),
         }));
         dispatch(getFireBaseData(newTasks));
+        dispatch(getFirebaseTaskArray(newTasks));
       });
     } else if (select == "Today") {
       let unsubscribe = FireBase.firestore().collection("tasks");
@@ -36,7 +38,7 @@ const AddTask = () => {
           )
         );
       });
-    } else  {
+    } else {
       let unsubscribe = FireBase.firestore().collection("tasks");
       unsubscribe = unsubscribe.onSnapshot((snapshot) => {
         const newTasks = snapshot.docs.map((task) => ({
@@ -60,15 +62,21 @@ const AddTask = () => {
     <>
       <div className="col-md-6">
         <h2 className="my-3 text-center fst-italic">{select}</h2>
+
         {getdata.map((data) => (
-          <ListGroup>
-            <ListGroup.Item>{data.task}</ListGroup.Item>
-          </ListGroup>
+          <>
+            <CheckBox project={data.id} />
+            <ListGroup>
+              <ListGroup.Item>{data.task}</ListGroup.Item>
+              <ListGroup.Item>{data.id}</ListGroup.Item>
+            </ListGroup>
+          </>
         ))}
-         <ListGroup className="my-3">
-            <ListGroup.Item onClick={() => handleAddTask()}>+ Add Task</ListGroup.Item>
-          </ListGroup>
-        
+        <ListGroup className="my-3">
+          <ListGroup.Item onClick={() => handleAddTask()}>
+            + Add Task
+          </ListGroup.Item>
+        </ListGroup>
       </div>
     </>
   );

@@ -3,7 +3,6 @@ import moment from "moment";
 import { useSelector, useDispatch } from "react-redux";
 import {
   FaSpaceShuttle,
-  FaRegCalendarAlt,
   FaSun,
   FaRegPaperPlane,
 } from "react-icons/fa";

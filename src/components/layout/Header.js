@@ -2,14 +2,18 @@ import { Navbar, Nav, Container } from "react-bootstrap";
 import { Form } from "react-bootstrap";
 import { Modal } from "react-bootstrap";
 import { Button } from "react-bootstrap";
-import { quickAddTask, toggleTask, setShowTaskDate } from "../../actions";
+import { quickAddTask, toggleTask, setShowTaskDate ,setShowProjectCalender} from "../../actions";
 import { useSelector, useDispatch } from "react-redux";
 import { FormControl, InputGroup } from "react-bootstrap";
-import { FaRegCalendarAlt } from "react-icons/fa";
+import { FaRegCalendarAlt ,FaRegCalendar} from "react-icons/fa";
 import { TaskDate } from "../TaskDate";
 import FireBase from "../../firebase";
+import ProjectOverlay from "../ProjectOverlay";
 const Header = () => {
   const select = useSelector((state) => state.tasks);
+  const project = useSelector((state) => state.projects);
+  
+  console.log(select,project)
   const dispatch = useDispatch();
 
   const handleShowToggle = () => {
@@ -19,9 +23,7 @@ const Header = () => {
     dispatch(toggleTask(!select.toggle));
   };
   const onChange = (e) => {
-    const { name, value } = e.target;
-
-    dispatch(quickAddTask(value));
+    dispatch(quickAddTask(e.target.value));
   };
   const OnSubmit = async (e) => {
     e.preventDefault();
@@ -30,9 +32,9 @@ const Header = () => {
       task: select.addtask,
       date:select.settaskdate,
       archived: false,
-      userId:'hfNENnqoWk7flzO8Iov4'
+      projectId:project.projectId
     });
-
+    dispatch(quickAddTask(""))
     dispatch(toggleTask(!select.toggle));
   };
   const handleCalender = () => {
@@ -77,6 +79,14 @@ const Header = () => {
                     <TaskDate />
                   ) : (
                     <FaRegCalendarAlt onClick={() => handleCalender()} />
+                  )}
+                  {project.setshowprojectcalender ? (
+                    <ProjectOverlay/>
+                  ) : (
+                    <FaRegCalendar onClick={() => {
+                      dispatch(setShowProjectCalender(!project.setshowprojectcalender));
+                      
+                    }} />
                   )}
                 </Modal.Footer>
               </Form>
