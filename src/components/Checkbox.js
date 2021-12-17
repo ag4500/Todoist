@@ -1,18 +1,20 @@
-import React from 'react';
-
-import  firebase  from '../firebase';
+import React from "react";
+import { AiOutlineCheckCircle } from "react-icons/ai";
+import firebase from "../firebase";
 
 export const CheckBox = (id) => {
   const archiveTask = () => {
-      console.log("data",id)
-    firebase.firestore().collection('tasks').doc(id.project).update({
+    firebase.firestore().collection("tasks").doc(id.project).update({
       archived: true,
     });
   };
 
   return (
-    <li style={{listStyleType:'circle'}} onClick={()=>archiveTask()}></li>
+    <AiOutlineCheckCircle
+      onClick={() => archiveTask()}
+      style={{ marginRight: "10px", color: "royalblue", fontSize: "20px" }}
+    />
   );
 };
 
-export default CheckBox
+export default CheckBox;

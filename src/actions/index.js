@@ -14,6 +14,8 @@ export const GET_FIREBASE_TASK_ARRAY="GET_FIREBASE_TASK_ARRAY";
 export const SET_ADD_PROJECT_NAME="SET_ADD_PROJECT_NAME";
 export const DELETE_PROJECT="DELETE_PROJECT";
 export const DELETE_PROJECT_BY_ID="DELETE_PROJECT_BY_ID";
+export const SET_ADD_PROJECT="SET_ADD_PROJECT";
+export const SET_DARK_MODE="SET_DARK_MODE";
 
 export const quickAddTask = (payload) => ({
   type: QUICK_ADD_TASK,
@@ -81,5 +83,13 @@ export const deleteProject=(payload)=>({
 })
 export const deleteProjectByID=(payload)=>({
   type:DELETE_PROJECT_BY_ID,
+  payload
+})
+export const setAddProject=(payload)=>({
+  type:SET_ADD_PROJECT,
+  payload
+})
+export const setDarkMode=(payload)=>({
+  type:SET_DARK_MODE,
   payload
 })

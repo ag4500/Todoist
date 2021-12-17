@@ -2,7 +2,7 @@ import ListGroup from "react-bootstrap/ListGroup";
 import { toggleTask } from "../actions";
 import { useSelector, useDispatch } from "react-redux";
 import CheckBox from "./Checkbox";
-
+import { FaPlus } from "react-icons/fa";
 const AddProjectTask = () => {
   const dispatch = useDispatch();
   const project = useSelector((state) => state.projects);
@@ -23,11 +23,16 @@ const AddProjectTask = () => {
           {project.setprojectname}
         </h2>
         {getprojectarray.map((i) =>
-          i.projectId == project.projectId ? <><li>{i.task}</li> <CheckBox/></>: undefined
+          i.projectId == project.projectId ? (
+            <ul className="task">
+              <CheckBox project={i.docId} />
+              {i.task}
+            </ul>
+          ) : undefined
         )}
-        <ListGroup className="my-3">
+        <ListGroup className="my-3" style={{ borderRadius: "50px" }}>
           <ListGroup.Item onClick={() => handleAddTask()}>
-            + Add Task
+            <FaPlus /> Add Task
           </ListGroup.Item>
         </ListGroup>
       </div>

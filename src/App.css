@@ -1,0 +1,130 @@
+@import url("https://fonts.googleapis.com");
+@import url("https://fonts.gstatic.com");
+@import url("https://fonts.googleapis.com/css2?family=Corinthia&family=Fuzzy+Bubbles:wght@700&family=Oooh+Baby&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Corinthia&family=Fuzzy+Bubbles&display=swap");
+
+* {
+  font-family: "Fuzzy Bubbles", cursive;
+}
+.logo-img {
+  width: 5rem;
+  border-radius: 70px;
+  margin-left: 135px;
+}
+
+.header {
+  list-style-type: none;
+  font-family: "Fuzzy Bubbles", cursive;
+}
+.filter__icon {
+  color: royalblue;
+  padding: 12px;
+}
+.filter__content {
+  color: black;
+}
+.todo-header {
+  margin-left: 30px;
+  color: darkblue;
+}
+.add {
+  margin-left: 30rem;
+}
+.fabars {
+  margin-left: 31px;
+  margin-right: 12px;
+}
+.project-list {
+  list-style: none;
+  color: darkolivegreen;
+  margin-left: 20px;
+}
+.add-project {
+  margin-left: 40px;
+  margin-right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+button {
+  display: block;
+  width: 60%;
+  padding: 0;
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+  margin-left: 40px;
+}
+label,
+input {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+}
+label {
+  margin-bottom: 4px;
+}
+
+label:nth-of-type(2) {
+  margin-top: 12px;
+}
+
+input::placeholder {
+  color: gray;
+}
+
+input {
+  background: #ecf0f3;
+  padding: 10px;
+  padding-left: 20px;
+  height: 50px;
+  font-size: 14px;
+  border-radius: 50px;
+  box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px white;
+}
+
+button {
+  margin-top: 20px;
+  background: green;
+  height: 40px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 900;
+  box-shadow: 6px 6px 6px #cbced1, -6px -6px 6px white;
+  transition: 0.5s;
+}
+
+.task {
+  padding: 10px 10px 10px 10px;
+  box-shadow: 6px 6px 6px #cbced1, -6px -6px 6px white;
+  transition: 0.5s;
+  border-radius: 10px;
+  background: #e9edf1;
+  margin: 25px;
+}
+.darkmode {
+  -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15);
+  background-color: #333131;
+  border-color: transparent;
+  color: beige;
+}
+.defaultmode {
+  display: flex;
+  justify-content: center;
+  color: rgb(3, 3, 3);
+  background-color: orangered;
+}
+.pizzadarkmode {
+  color: white;
+}
+.pizzadefaultmode {
+  color: black;
+}
+.calender {
+  list-style-type: none;
+  cursor: pointer;
+}

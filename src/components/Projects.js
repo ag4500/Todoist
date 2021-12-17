@@ -7,18 +7,19 @@ import {
   deleteProject,
   addProject,
   deleteProjectByID,
+  setAddProject,
 } from "../actions";
-import { FaTrashAlt } from "react-icons/fa";
+import { FaTrashAlt, FaBars, FaStar, FaPlus } from "react-icons/fa";
 import FireBase from "../firebase";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { Modal, Button } from "react-bootstrap";
 
 const Projects = () => {
+
   const getproject = useSelector((state) => state.firebaseData.getproject);
   const setProjectToggle = useSelector((state) => state.projects);
   const dispatch = useDispatch();
-  console.log(getproject);
   const handleProject = () => {
     dispatch(setProject(!setProjectToggle.setProject));
   };
@@ -31,15 +32,19 @@ const Projects = () => {
       projectId: new Date().getTime().toString(),
     });
     dispatch(addProject(""));
+    dispatch(setAddProject(!setProjectToggle.setaddproject))
   };
+
   const handleDeleteProject = () => {
-    console.log(setProjectToggle.delete);
     FireBase.firestore()
       .collection("projects")
       .doc(setProjectToggle.delete)
       .delete();
-    dispatch(deleteProject(!setProjectToggle.removeproject))
+    dispatch(deleteProject(!setProjectToggle.removeproject));
+    dispatch(setProjectName((setProjectToggle.setprojectname = "")));
+    dispatch(getprojectId(""));
   };
+
   useEffect(() => {
     let unsubscribe = FireBase.firestore().collection("projects");
     unsubscribe = unsubscribe.onSnapshot((snapshot) => {
@@ -52,13 +57,16 @@ const Projects = () => {
   }, []);
 
   return (
+    
     <ul>
-      <li onClick={() => handleProject()}>Project</li>
+      <FaBars className="fabars" style={{cursor:'pointer'}} onClick={() => handleProject()} />
+      Project
       {setProjectToggle.setProject ? (
         <div>
           {getproject.map((data) => (
-            <>
-              <li
+            <ul className="project-list ">
+              <FaStar
+                style={{ margin: "5px", color: "darkblue", cursor: "pointer" }}
                 onClick={() => {
                   dispatch(setShowProject(true));
                   dispatch(
@@ -68,20 +76,18 @@ const Projects = () => {
                   );
                   dispatch(getprojectId(data.projectId));
                 }}
-              >
-                {data.name}
-                {"   "}
-              </li>
-              
-              <span>
-                <FaTrashAlt
-                  onClick={() => {
-                    dispatch(deleteProject(!setProjectToggle.removeproject));
-                    dispatch(deleteProjectByID(data.docId));
-                  }}
-                />
-              </span>
-            </>
+              />
+
+              {data.name}
+
+              <FaTrashAlt
+                style={{ color: "black" }}
+                onClick={() => {
+                  dispatch(deleteProject(!setProjectToggle.removeproject));
+                  dispatch(deleteProjectByID(data.docId));
+                }}
+              />
+            </ul>
           ))}
           {setProjectToggle.removeproject ? (
             <Modal.Dialog>
@@ -107,20 +113,31 @@ const Projects = () => {
               </Modal.Footer>
             </Modal.Dialog>
           ) : undefined}
-          <form onSubmit={handleAddProjectSubmit}>
-            <label>
-              +
-              <input
-                type="text"
-                name="name"
-                value={setProjectToggle.setprojectaddname}
-                onChange={(e) => dispatch(addProject(e.target.value))}
-              />
-            </label>
-            <button type="submit" value="Submit">
-              Add PRoject
-            </button>
-          </form>
+          <FaPlus
+            className="add-project"
+            onClick={() =>
+              dispatch(setAddProject(!setProjectToggle.setaddproject))
+            }
+          />
+          Add Project
+          {setProjectToggle.setaddproject ? (
+            <form
+              onSubmit={handleAddProjectSubmit}
+              className="project-list my-1"
+            >
+              <label>
+                <input
+                  type="text"
+                  name="name"
+                  value={setProjectToggle.setprojectaddname}
+                  onChange={(e) => dispatch(addProject(e.target.value))}
+                />
+              </label>
+              <button type="submit" value="Submit">
+                Add PRoject
+              </button>
+            </form>
+          ) : undefined}
         </div>
       ) : undefined}
     </ul>

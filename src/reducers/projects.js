@@ -7,6 +7,7 @@ import {
   SET_ADD_PROJECT_NAME,
   DELETE_PROJECT,
   DELETE_PROJECT_BY_ID,
+  SET_ADD_PROJECT,
 } from "../actions";
 
 const initialState = {
@@ -18,6 +19,7 @@ const initialState = {
   setprojectaddname: "",
   removeproject: false,
   delete: "",
+  setaddproject:false,
 };
 
 export default function projects(state = initialState, action) {
@@ -62,6 +64,11 @@ export default function projects(state = initialState, action) {
         ...state,
         delete: action.payload,
       };
+    case SET_ADD_PROJECT:
+      return{
+        ...state,
+        setaddproject:action.payload
+      }
     default:
       return state;
   }
