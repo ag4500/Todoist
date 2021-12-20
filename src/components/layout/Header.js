@@ -20,10 +20,13 @@ import {
 import { TaskDate } from "../TaskDate";
 import FireBase from "../../firebase";
 import ProjectOverlay from "../ProjectOverlay";
+
 const Header = () => {
+  
   const select = useSelector((state) => state.tasks);
   const project = useSelector((state) => state.projects);
   const dispatch = useDispatch();
+
   const handleShowToggle = () => {
     dispatch(toggleTask(!select.toggle));
   };

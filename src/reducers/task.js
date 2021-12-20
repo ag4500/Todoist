@@ -5,7 +5,8 @@ import {
   SET_TASK_DATE,
   SET_SELECTED_PROJECT,
   SET_PROJECT,
-  SET_DARK_MODE
+  SET_DARK_MODE,
+  
 } from "../actions";
 
 const initialState = {
@@ -16,7 +17,8 @@ const initialState = {
   setselectedproject: "Inbox",
   setProject: false,
   projectId: "",
-  darkMode:false
+  darkMode: false,
+  setHover: false,
 };
 
 export default function tasks(state = initialState, action) {
@@ -52,10 +54,11 @@ export default function tasks(state = initialState, action) {
         setProject: action.payload,
       };
     case SET_DARK_MODE:
-      return{
+      return {
         ...state,
-        darkMode:action.payload
-      }
+        darkMode: action.payload,
+      };
+    
     default:
       return state;
   }

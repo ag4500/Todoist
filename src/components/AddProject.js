@@ -10,7 +10,6 @@ const AddProjectTask = () => {
   const getprojectarray = useSelector(
     (state) => state.firebaseData.gettaskarrayproject
   );
-
   const addTaskToggle = useSelector((state) => state.tasks);
   const handleAddTask = () => {
     dispatch(toggleTask(!addTaskToggle.toggle));

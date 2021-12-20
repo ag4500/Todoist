@@ -1,14 +1,13 @@
 import {
   getprojectId,
   getFireBaseProject,
-  setShowProjectCalender
+  setShowProjectCalender,
 } from "../actions";
 import FireBase from "../firebase";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-
+import { BiCaretRight } from "react-icons/bi";
 const ProjectOverlay = () => {
-  
   const getproject = useSelector((state) => state.firebaseData.getproject);
   const setProjectToggle = useSelector((state) => state.projects);
   const dispatch = useDispatch();
@@ -18,7 +17,7 @@ const ProjectOverlay = () => {
     unsubscribe = unsubscribe.onSnapshot((snapshot) => {
       const newProjects = snapshot.docs.map((task) => ({
         ...task.data(),
-        docId:task.id
+        docId: task.id,
       }));
       dispatch(getFireBaseProject(newProjects));
     });
@@ -29,6 +28,7 @@ const ProjectOverlay = () => {
       <div>
         {getproject.map((data) => (
           <li
+            style={{ listStyleType: "none",cursor:'pointer' }}
             onClick={() => {
               dispatch(
                 setShowProjectCalender(!setProjectToggle.setshowprojectcalender)
@@ -38,6 +38,8 @@ const ProjectOverlay = () => {
               );
             }}
           >
+            <BiCaretRight />
+
             {data.name}
           </li>
         ))}

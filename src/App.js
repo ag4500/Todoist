@@ -4,7 +4,7 @@ import { Sidebar } from "./components/layout/Sidebar";
 
 function App() {
   return (
-    <div className="App">
+    <div className="App" >
       <header className="App-header">
         <Header />
         <Sidebar />

@@ -8,6 +8,7 @@ import {
   addProject,
   deleteProjectByID,
   setAddProject,
+  setSelecedProject,
 } from "../actions";
 import { FaTrashAlt, FaBars, FaStar, FaPlus } from "react-icons/fa";
 import FireBase from "../firebase";
@@ -16,10 +17,11 @@ import { useEffect } from "react";
 import { Modal, Button } from "react-bootstrap";
 
 const Projects = () => {
-
   const getproject = useSelector((state) => state.firebaseData.getproject);
+  const getdata = useSelector((state) => state.firebaseData.getdata);
   const setProjectToggle = useSelector((state) => state.projects);
   const dispatch = useDispatch();
+
   const handleProject = () => {
     dispatch(setProject(!setProjectToggle.setProject));
   };
@@ -32,17 +34,27 @@ const Projects = () => {
       projectId: new Date().getTime().toString(),
     });
     dispatch(addProject(""));
-    dispatch(setAddProject(!setProjectToggle.setaddproject))
+    dispatch(setAddProject(!setProjectToggle.setaddproject));
   };
 
   const handleDeleteProject = () => {
+    getproject.map((i) => {
+      getdata.filter((id) => {
+        if (id.projectId === i.projectId) {
+          FireBase.firestore().collection("tasks").doc(id.docId).delete();
+        }
+      });
+    });
     FireBase.firestore()
       .collection("projects")
       .doc(setProjectToggle.delete)
       .delete();
+
     dispatch(deleteProject(!setProjectToggle.removeproject));
     dispatch(setProjectName((setProjectToggle.setprojectname = "")));
     dispatch(getprojectId(""));
+    dispatch(setSelecedProject("Inbox"));
+    dispatch(setShowProject(false));
   };
 
   useEffect(() => {
@@ -57,31 +69,35 @@ const Projects = () => {
   }, []);
 
   return (
-    
     <ul>
-      <FaBars className="fabars" style={{cursor:'pointer'}} onClick={() => handleProject()} />
+      <FaBars
+        className="fabars"
+        style={{ cursor: "pointer" }}
+        onClick={() => handleProject()}
+      />
       Project
       {setProjectToggle.setProject ? (
         <div>
           {getproject.map((data) => (
-            <ul className="project-list ">
+            <ul
+              style={{ margin: "5px", color: "darkblue", cursor: "pointer" }}
+              className="project-list"
+              onClick={() => {
+                dispatch(setShowProject(true));
+                dispatch(
+                  setProjectName((setProjectToggle.setprojectname = data.name))
+                );
+                dispatch(getprojectId(data.projectId));
+              }}
+            >
               <FaStar
                 style={{ margin: "5px", color: "darkblue", cursor: "pointer" }}
-                onClick={() => {
-                  dispatch(setShowProject(true));
-                  dispatch(
-                    setProjectName(
-                      (setProjectToggle.setprojectname = data.name)
-                    )
-                  );
-                  dispatch(getprojectId(data.projectId));
-                }}
               />
 
               {data.name}
 
               <FaTrashAlt
-                style={{ color: "black" }}
+                className="hover"
                 onClick={() => {
                   dispatch(deleteProject(!setProjectToggle.removeproject));
                   dispatch(deleteProjectByID(data.docId));

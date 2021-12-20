@@ -1,4 +1,10 @@
-import { toggleTask, getFireBaseData, getFirebaseTaskArray} from "../actions";
+import {
+  toggleTask,
+  getFireBaseData,
+  getFirebaseTaskArray,
+  setTaskDate,
+  
+} from "../actions";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import FireBase from "../firebase";
@@ -8,16 +14,15 @@ import CheckBox from "./Checkbox";
 import { FaPlus } from "react-icons/fa";
 
 const AddTask = () => {
-
   const dispatch = useDispatch();
   const getdata = useSelector((state) => state.firebaseData.getdata);
   const select = useSelector((state) => state.tasks.setselectedproject);
   const addTaskToggle = useSelector((state) => state.tasks);
-
+ 
   const handleAddTask = () => {
     dispatch(toggleTask(!addTaskToggle.toggle));
   };
-  
+
   useEffect(() => {
     if (select == "Inbox") {
       let unsubscribe = FireBase.firestore().collection("tasks");
@@ -26,13 +31,14 @@ const AddTask = () => {
           ...task.data(),
           docId: task.id,
         }));
+        
         dispatch(
           getFireBaseData(newTasks.filter((data) => data.archived != true))
         );
         dispatch(
           getFirebaseTaskArray(newTasks.filter((data) => data.archived != true))
         );
-       
+        
       });
     } else if (select == "Today") {
       let unsubscribe = FireBase.firestore().collection("tasks");
@@ -50,15 +56,17 @@ const AddTask = () => {
             )
           )
         );
-     
+        dispatch(setTaskDate(moment().format("DD/MM/YYYY")));
+        
       });
-    } else if (select=='Next 7 days') {
+    } else if (select == "Next 7 days") {
       let unsubscribe = FireBase.firestore().collection("tasks");
       unsubscribe = unsubscribe.onSnapshot((snapshot) => {
         const newTasks = snapshot.docs.map((task) => ({
           ...task.data(),
           docId: task.id,
         }));
+        dispatch(setTaskDate(moment().add(1, "day").format("DD/MM/YYYY")));
 
         dispatch(
           getFireBaseData(
@@ -66,11 +74,12 @@ const AddTask = () => {
               (data) =>
                 moment(data.date, "DD-MM-YYYY").diff(
                   moment().format("MMM D, YYYY")
-                ) > 0 && data.archived != true
+                ) > 0 &&
+                data.archived != true &&
+                data.date != ""
             )
           )
         );
-       
       });
     }
   }, [select]);
@@ -78,6 +87,7 @@ const AddTask = () => {
   return (
     <>
       <div className="col-md-6">
+      
         <h2
           className="my-3 text-center fst-bold"
           style={{ color: "royalblue" }}

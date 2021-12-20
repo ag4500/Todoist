@@ -1,16 +1,12 @@
 import React from "react";
 import moment from "moment";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  FaSpaceShuttle,
-  FaSun,
-  FaRegPaperPlane,
-} from "react-icons/fa";
+import { FaSpaceShuttle, FaSun, FaRegPaperPlane } from "react-icons/fa";
 import { setShowTaskDate, setTaskDate } from "../actions";
 export const TaskDate = () => {
-
-  const showTaskDate = useSelector((state) => state.tasks.showtaskdate);
   
+  const showTaskDate = useSelector((state) => state.tasks.showtaskdate);
+
   const dispatch = useDispatch();
   return showTaskDate ? (
     <ul className="calender">
@@ -21,7 +17,7 @@ export const TaskDate = () => {
             dispatch(setTaskDate(moment().format("DD/MM/YYYY")));
           }}
         >
-          <span >
+          <span>
             <FaSpaceShuttle />
           </span>
           <span>Today</span>

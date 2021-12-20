@@ -17,6 +17,7 @@ export const DELETE_PROJECT_BY_ID="DELETE_PROJECT_BY_ID";
 export const SET_ADD_PROJECT="SET_ADD_PROJECT";
 export const SET_DARK_MODE="SET_DARK_MODE";
 
+
 export const quickAddTask = (payload) => ({
   type: QUICK_ADD_TASK,
   payload,
